@@ -1,8 +1,10 @@
-class zone():
+class box():    
     def __init__(self):
         self.__inhabited = False
         self.__white = True
         self.__happy = True
+        self.__canvas_body = False
+        self.__neighbors = []
     
     def is_full(self):
         return self.__inhabited
@@ -12,3 +14,22 @@ class zone():
     
     def is_happy(self):
         return self.__happy
+
+    def set_empty(self):
+        self.__inhabited = False
+    
+    def set_full(self):
+        self.__inhabited = True
+    
+    def set_black(self):
+        self.__white = False
+    
+    def set_white(self):
+        self.__white = True
+    
+    def set_happy(self):
+        self.__happy = True
+    
+    def set_angry(self):
+        self.__happy = False
+    
