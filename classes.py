@@ -41,3 +41,7 @@ class box():
     def aff_process(self):
         return self.__aff_process
     
+    def add_neighbors(self,nei_tupple):
+        self.__neighbors.append(nei_tupple)
+
+    

@@ -24,8 +24,46 @@ def process_target(process_id,first_zone,last_zone,zones_in_line,boxes_array):
     # Initialisation:
     for num_line in range(first_zone,last_zone):
         for num_col in range(zones_in_line):
-            boxes_array[num_line][num_col].set_process_id(process_id)
             # For each element in the processes area
+            boxes_array[num_line][num_col].set_process_id(process_id) # attribute to a process 
+            
+            # verifying each neighbor
+            delta_line = -1
+            delta_col = -1
+
+            for nei_num in range(8):
+                if nei_num < 3:
+                    delta_col +=1
+
+                elif nei_num == 3:
+                    delta_line += 1
+                    delta_col = -1
+
+                elif nei_num == 4:
+                    delta_col = 1
+                
+                elif nei_num == 5:
+                    delta_col = -1
+                    delta_line += 1
+
+                else:
+                    delta_col += 1
+                
+                nei_line = delta_line+num_line
+                nei_col = delta_col+num_col
+
+                if nei_line < 0:
+                    nei_line = zones_in_line-1
+                elif nei_line > zones_in_line-1:
+                    nei_line = 0
+                
+                if nei_col < 0:
+                    nei_col = zones_in_line-1
+                elif nei_col > zones_in_line-1:
+                    nei_col = 0
+                
+                boxes_array[num_line][num_col].add_neighbors((nei_col,nei_line))
+
             pass
             
     # BOUCLE :
