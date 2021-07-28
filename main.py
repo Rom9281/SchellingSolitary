@@ -17,7 +17,24 @@ import tkinter as tk
 from functions import *
 from classes import *
 
-# _____________________   VARIABLES   ____________________
+# _____________________   PROCESS TARGET   _____________________
+
+def process_target(process_id,first_zone,last_zone,zones_in_line,boxes_array):
+    pass
+    # Initialisation:
+    for num_line in range(first_zone,last_zone):
+        for num_col in range(zones_in_line):
+            boxes_array[num_line][num_col].set_process_id(process_id)
+            # For each element in the processes area
+            pass
+            
+    # BOUCLE :
+    while True:
+        pass
+    # 1. Modification du statut
+
+    # 2. Modification du physique
+# ________________________   VARIABLES   _______________________
 
 
 # Field Parameters
@@ -37,10 +54,11 @@ canvas = tk.Canvas(window,width=window_len,height=window_len) # Defining the can
 # Multiprocessing related variables
 # _________________________________
 
-num_process = optimal_num_process(zones_in_line)**2
+num_process = optimal_num_process(zones_in_line)
 
 
-# _____________________   PROGRAM   _______________________
+
+# ===============================   PROGRAM   =================================
 
 window.geometry("%sx%s"%(window_len,window_len)) # Defining window geo
 

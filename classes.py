@@ -4,6 +4,8 @@ class box():
         self.__white = True
         self.__happy = True
         self.__canvas_body = False
+
+        self.__aff_process  = -1
         self.__neighbors = []
     
     def is_full(self):
@@ -32,4 +34,10 @@ class box():
     
     def set_angry(self):
         self.__happy = False
+    
+    def set_process_id(self,num):
+        self.__aff_process = num
+    
+    def aff_process(self):
+        return self.__aff_process
     
