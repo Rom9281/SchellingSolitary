@@ -53,3 +53,5 @@ def generate_field(canvas,window,zones_in_line,window_len,boxes_array):
                 boxes_array[col_num][line_num].set_full() # The box is empty
 
             zone = canvas.create_rectangle(col_num*step,line_num*step,(col_num+1)*step,(line_num+1)*step,outline="black",fill = color)
+
+

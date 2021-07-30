@@ -24,8 +24,6 @@ def process_target(process_id,first_zone,last_zone,zones_in_line,boxes_array):
     # Initialisation:
     for num_line in range(first_zone,last_zone):
         for num_col in range(zones_in_line):
-            # For each element in the processes area
-            boxes_array[num_line][num_col].set_process_id(process_id) # attribute to a process 
             
             # verifying each neighbor
             delta_line = -1
@@ -64,14 +62,26 @@ def process_target(process_id,first_zone,last_zone,zones_in_line,boxes_array):
                 
                 boxes_array[num_line][num_col].add_neighbors((nei_col,nei_line))
 
-            pass
             
     # BOUCLE :
     while True:
-        pass
-    # 1. Modification du statut
 
-    # 2. Modification du physique
+        for num_line in range(first_zone,last_zone):
+            for num_col in range(zones_in_line):
+
+                for nei_tuple in boxes_array[num_line][num_col].get_neighbors():
+                    pass
+                    
+
+def array_to_matrix(array,zones_in_line):
+    matrix = []
+    ss_list = []
+    for i in range(len(array)):
+        if i%(zones_in_line-1) == 0:
+            ss_list.append(array[i])
+            matrix.append(ss_list)
+
+
 # ________________________   VARIABLES   _______________________
 
 
@@ -94,6 +104,22 @@ canvas = tk.Canvas(window,width=window_len,height=window_len) # Defining the can
 
 num_process = optimal_num_process(zones_in_line)
 
+state_array = mp.Array('i',zones_in_line**2)
+color_array = mp.Array('i',zones_in_line**2)
+feeling_array = mp.Array('i',zones_in_line**2)
+
+state_array_lock = mp.Lock()
+color_array_lock = mp.Lock()
+feeling_array_lock = mp.Lock()
+
+
+process_list = []
+
+for i in range(num_process):
+    first_zone = int(i*zones_in_line/num_process)
+    last_zone = int((i+1)*zones_in_line/num_process)
+    process_list.append(mp.Process(target= process_target, args=(i,first_zone,last_zone,zones_in_line,boxes_array)))
+
 
 
 # ===============================   PROGRAM   =================================
@@ -104,4 +130,15 @@ canvas.pack()
 
 generate_field(canvas,window,zones_in_line,window_len,boxes_array)
 
+
+
+for i in range(num_process):
+    process_list[i].start()
+
+
 window.mainloop() # Tk mainloop
+
+
+for i in range(num_process):
+    process_list[i].join()
+

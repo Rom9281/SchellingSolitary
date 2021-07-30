@@ -8,14 +8,32 @@ class box():
         self.__aff_process  = -1
         self.__neighbors = []
     
+    def is_full_num(self):
+        if self.__inhabited:
+            return 1
+        else:
+            return 0
+    
     def is_full(self):
         return self.__inhabited
 
     def is_white(self):
         return self.__white
+
+    def is_white_num(self):
+        if self.__white:
+            return 1
+        else:
+            return 0
     
     def is_happy(self):
         return self.__happy
+    
+    def is_happy_num(self):
+        if self.__happy:
+            return 1
+        else:
+            return 0
 
     def set_empty(self):
         self.__inhabited = False
@@ -43,5 +61,8 @@ class box():
     
     def add_neighbors(self,nei_tupple):
         self.__neighbors.append(nei_tupple)
+
+    def get_neighbors(self):
+        return self.__neighbors
 
     
