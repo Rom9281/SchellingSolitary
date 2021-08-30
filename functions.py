@@ -55,3 +55,13 @@ def generate_field(canvas,window,zones_in_line,window_len,boxes_array):
             zone = canvas.create_rectangle(col_num*step,line_num*step,(col_num+1)*step,(line_num+1)*step,outline="black",fill = color)
 
 
+def get_array_coord(x,y,matrix_len):
+    return y*matrix_len + x
+
+def get_matrix_coord(i,matrix_len):
+    return i//matrix_len, i%matrix_len
+
+print(get_array_coord(2,1,3))
+print(get_matrix_coord(2,3))
+
+

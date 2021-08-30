@@ -20,8 +20,9 @@ from classes import *
 # _____________________   PROCESS TARGET   _____________________
 
 def process_target(process_id,first_zone,last_zone,zones_in_line,boxes_array):
-    pass
+
     # Initialisation:
+
     for num_line in range(first_zone,last_zone):
         for num_col in range(zones_in_line):
             
@@ -61,25 +62,57 @@ def process_target(process_id,first_zone,last_zone,zones_in_line,boxes_array):
                     nei_col = 0
                 
                 boxes_array[num_line][num_col].add_neighbors((nei_col,nei_line))
-
-            
+  
     # BOUCLE :
+
     while True:
 
+        # For each block in the area
         for num_line in range(first_zone,last_zone):
             for num_col in range(zones_in_line):
+                
+                # getting the state of the zone
+                state_array_lock.acquire()
+                state_block = state_array[get_array_coord(num_line,num_col,zones_in_line)]
+                state_array_lock.release()
+                
+                if state_block:
+                    # If the state block exists
 
-                for nei_tuple in boxes_array[num_line][num_col].get_neighbors():
-                    pass
+                    # Getting the color of the zone
+                    color_array_lock.acquire()
+                    color_block = color_array[get_array_coord(num_line,num_col,zones_in_line)]
+                    color_array_lock.release()
+
+                    # Defining the number of bad neighbors
+                    bad_nei = 0
+
+                    for nei_tuple in boxes_array[num_line][num_col].get_neighbors():
+                        # getting the state of the neighbor
+                        state_array_lock.acquire()
+                        state_block_nei = state_array[get_array_coord(num_line,num_col,zones_in_line)]
+                        state_array_lock.release()
+
+                        if state_block_nei:
+                            # Getting the color of the neighbor
+                            color_array_lock.acquire()
+                            color_block_neighbor = color_array[get_array_coord(nei_tuple[0],nei_tuple[1])]
+                            color_array_lock.release()
+
+                            if color_block != color_block_neighbor:
+                                bad_nei += 1
+
+                    if bad_nei > 4:
+                        # If there are more than 4 bad neighbors, the person is unhappy
+                        feeling_array_lock.acquire()
+                        feeling_array[get_array_coord(num_line,num_col,zones_in_line)] = 0
+                        feeling_array_lock.release()
+                    else:
+                        feeling_array_lock.acquire()
+                        feeling_array[get_array_coord(num_line,num_col,zones_in_line)] = 1
+                        feeling_array_lock.release()
+
                     
-
-def array_to_matrix(array,zones_in_line):
-    matrix = []
-    ss_list = []
-    for i in range(len(array)):
-        if i%(zones_in_line-1) == 0:
-            ss_list.append(array[i])
-            matrix.append(ss_list)
 
 
 # ________________________   VARIABLES   _______________________
